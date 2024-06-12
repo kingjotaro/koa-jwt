@@ -16,8 +16,9 @@ const users = [
 
 // Middleware para autenticação JWT
 const authenticateJWT = async (ctx, next) => {
-    const token = ctx.headers.authorization;
-    if (token) {
+    const authHeader = ctx.headers.authorization;
+    if (authHeader) {
+        const token = authHeader.split(' ')[1]; // Pega o token após "Bearer"
         try {
             const decoded = jwt.verify(token, SECRET_KEY);
             ctx.state.user = decoded;
